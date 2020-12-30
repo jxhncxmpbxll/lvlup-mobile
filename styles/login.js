@@ -5,7 +5,6 @@ const loginStyles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'red'
   },
   TextInput: {
     borderBottomWidth: 0,
