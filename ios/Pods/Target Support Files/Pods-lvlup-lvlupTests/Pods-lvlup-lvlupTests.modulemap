@@ -1,0 +1,6 @@
+module Pods_lvlup_lvlupTests {
+  umbrella header "Pods-lvlup-lvlupTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
