@@ -1,34 +1,41 @@
-import React, {useState, useEffect} from 'react';
-import { View, Text, TextInput, TouchableOpacity, Modal, Button } from 'react-native';
+import React, {useState} from 'react';
+import { View, Text, TextInput, Button } from 'react-native';
 
 import axios from 'axios';
-import styles from '../styles/login.js';
+import styles from '../styles/createAccount.js';
 
-const Login = (props) => {
+const CreateAccount = () => {
   const [username, onUsernameChange] = useState('');
   const [password, onPasswordChange] = useState('');
   const [isValid, onLogin] = useState('');
 
-  const handleLogin = () => {
-    axios.post('http://127.0.0.1:3002/api/login',
-    {username: username, password: password})
+  const handleCreateAccount = () => {
+    axios.post('http://127.0.0.1:3002/api/addUser',
+    {
+      username: username,
+      password: password,
+      level: 0,
+      experience: 0,
+      strength: 0,
+      intellect: 0,
+      charisma: 0,
+      healing: 0,
+      tasks: []
+    })
     .then(result => result.data)
     .then(result => {
       if (result === false) {
-      console.log('Incorrect Username or Password')
+      console.log('Username already in use')
       onLogin('false');
     } else {
       console.log('Success')
       onLogin('true');
-      props.toggle();
     }})
     .catch(err => console.log(err))
   }
 
-    return (
-
-      <View style={styles.loginContainer}>
-
+  return (
+    <View style={styles.createAccountContainer}>
       <TextInput
         style={styles.TextInput}
         placeholder="Username"
@@ -49,25 +56,16 @@ const Login = (props) => {
         accessibilityLabel="Password Input"
       />
       <Text style={styles.errorText}>
-        {isValid === 'false' ? 'Incorrect Username or Password' : '' }
+        {isValid === 'false' ? 'Username already in use' : '' }
       </Text>
-      <TouchableOpacity
-        style={styles.loginButton}
-        onPress={()=> handleLogin()}
-        title="Login"
-        accessibilityLabel="Login button"
-      >
-        <Text>Login</Text>
-      </TouchableOpacity>
-      <View>
-        <Text>Don't have an account?</Text>
-        <TouchableOpacity>
-          <Text>Sign Up</Text>
-        </TouchableOpacity>
-        </View>
+      <Button
+        onPress={()=> handleCreateAccount()}
+        title="Create Account"
+        style={styles.createButton}
+        accessibilityLabel="Create account button"
+      />
     </View>
-
   )
 }
 
-export default Login;
+export default CreateAccount;

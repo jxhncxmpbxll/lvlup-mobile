@@ -10,6 +10,13 @@ const UserSchema = new Schema({
   intellect: Number,
   charisma: Number,
   healing: Number,
+  applyOnLvlUp: {
+    str: Number,
+    int: Number,
+    chr: Number,
+    heal: Number
+  },
+  healing: Number,
   tasks: [{task: {type: Schema.Types.ObjectId, ref: 'Task'}}]
 })
 
