@@ -8,8 +8,10 @@ const PORT = 3002;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.get('/api/tasks', (req, res) => {
-  db.getTasks()
+app.post('/api/tasks', (req, res) => {
+  const { _id } = req.body;
+  console.log(req.body, '<-- req.body received');
+  db.getTasks(_id)
   .then(result => res.status(200).send(result))
   .catch(err => {
     console.log(err);
@@ -41,7 +43,16 @@ app.post('/api/login', (req, res) => {
 })
 
 app.post('/api/tasks/add', (req, res) => {
-  db.addTask(req.body.username, req.body.tasks)
+  db.addTask(req.body)
+  .then(result => res.status(200).send(result))
+  .catch(err => {
+    console.log(err);
+    res.status(400).send(err);
+  })
+});
+
+app.put('/api/updateUser', (req, res) => {
+  db.updateUser(req.body)
   .then(result => res.status(200).send(result))
   .catch(err => {
     console.log(err);
@@ -59,7 +70,7 @@ app.put('/api/tasks/edit', (req, res) => {
 });
 
 app.put('/api/tasks/complete', (req, res) => {
-  db.completeTask(req.body.username, req.body.selectedTask)
+  db.completeTask(req.body)
   .then(result => res.status(200).send(result))
   .catch(err => {
     console.log(err);

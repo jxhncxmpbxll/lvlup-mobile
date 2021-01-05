@@ -16,8 +16,15 @@ const UserSchema = new Schema({
     chr: Number,
     heal: Number
   },
-  healing: Number,
-  tasks: [{task: {type: Schema.Types.ObjectId, ref: 'Task'}}]
+}, {
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
+})
+
+UserSchema.virtual('tasks', {
+  ref: 'Task',
+  foreignField: 'user',
+  localField: '_id'
 })
 
 const User = mongoose.model('User', UserSchema);

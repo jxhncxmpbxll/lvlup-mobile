@@ -3,6 +3,7 @@ import {StyleSheet} from 'react-native';
 const taskStyles = StyleSheet.create({
   taskContainer: {
     height: 50,
+    position: 'relative',
     width: '100%',
     flexDirection: 'row',
     marginTop: 7,
@@ -31,5 +32,6 @@ const taskStyles = StyleSheet.create({
     fontSize: 12,
   }
 })
+
 
 export default taskStyles;

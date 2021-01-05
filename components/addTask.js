@@ -1,62 +1,101 @@
 import React, {useState} from 'react';
-import { View, Text, TextInput, Picker, Button } from 'react-native';
+import { View, Text, TextInput, Image, TouchableOpacity } from 'react-native';
 
 import axios from 'axios';
 import styles from '../styles/addTask.js';
 
 const AddTask = (props) => {
-  const [taskName, onTaskNameChange] = useState('');
-  const [timeInvestment, onTimeChange] = useState('');
+
+  const [questName, setQuestChange] = useState('');
   const [category, onCategoryChange] = useState('');
 
   const handleAddTask = () => {
-    axios.post('http://127.0.0.1:3002/api/addTask',
+    axios.post('http://127.0.0.1:3002/api/tasks/add',
     {
-      name: taskName,
+      name: questName,
       category: category,
       status: 'In Progress',
       dateCreated: new Date(),
       dateCompleted: '',
-      user: props.user
+      user: props.userId
     })
     .then(result => result.data)
     .then(result => {
       console.log('Quest Added Successfully!', result);
+      props.setTasks([...props.tasks, result]);
+      props.toggle();
+      setQuestChange('');
     })
     .catch(err => console.log(err))
   }
 
-  const [selected, setSelected] = useState('');
+    const categoryDisplay = () => {
+      if (category === 'str') {
+        return 'Strength';
+      }
+      if (category === 'int') {
+        return 'Intellect';
+      }
+      if (category === 'chr') {
+        return 'Charisma';
+      }
+      if (category === 'heal') {
+        return 'Healing';
+      }
+    }
+
 
   return (
     <View style={styles.addTaskContainer}>
+      <TouchableOpacity style={styles.closeIcon} onPress={()=> {
+        props.toggle();
+        setQuestChange('');
+      }}>
+        <Image style={styles.closeIcon} source={require('../src/assets/icons/close_icon.png')}/>
+      </TouchableOpacity>
+      <Text>Your next Quest is..</Text>
       <TextInput
         style={styles.TextInput}
         placeholder="Quest Name"
         maxLength={16}
-        autoCapitalize="none"
-        onChangeText={text => onQuestNameChange(text)}
-        value={''}
+        onChangeText={text => setQuestChange(text)}
+        value={questName}
         accessibilityLabel="Quest name Input"
       />
-      <View accessibilityLabel="Select a Category">
-        <Picker
-          selected={selected}
-          style={{ height: 15, width: 30 }}
-          onValueChange={(category, catIndex) => setSelected(category)}
+      <View style={styles.categoryPicker} accessibilityLabel="Select a Category">
+        <TouchableOpacity
+          onPress={()=> onCategoryChange('str')}
+          accessibilityLabel="Select Strength"
         >
-          <Picker.Item label="Strength" value="str" />
-          <Picker.Item label="Intellect" value="int" />
-          <Picker.Item label="Charisma" value="chr" />
-          <Picker.Item label="Healing" value="heal" />
-        </Picker>
+          <Image style={styles.attributeIcon} source={require('../src/assets/icons/str-icon.png')}/>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={()=> onCategoryChange('int')}
+          accessibilityLabel="Select Intellect"
+        >
+          <Image style={styles.attributeIcon} source={require('../src/assets/icons/int-icon.png')}/>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={()=> onCategoryChange('chr')}
+          accessibilityLabel="Select Charisma"
+        >
+          <Image style={styles.attributeIcon} source={require('../src/assets/icons/chr-icon.png')}/>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={()=> onCategoryChange('heal')}
+          accessibilityLabel="Select Charisma"
+        >
+          <Image style={styles.attributeIcon} source={require('../src/assets/icons/heal-icon.png')}/>
+        </TouchableOpacity>
       </View>
-      <Button
+      <Text>{categoryDisplay()}</Text>
+      <TouchableOpacity
         onPress={()=> handleAddTask()}
-        title="Add Quest"
         style={styles.createButton}
         accessibilityLabel="Create quest button"
-      />
+      >
+      <Text>Add Quest</Text>
+      </TouchableOpacity>
     </View>
   )
 }

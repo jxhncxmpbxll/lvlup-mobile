@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import { View, Text, TextInput, TouchableOpacity, Modal, Button } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Modal } from 'react-native';
+import Input from './input';
+import Button from './button';
 
 import axios from 'axios';
 import styles from '../styles/login.js';
@@ -9,56 +11,55 @@ const Login = (props) => {
   const [password, onPasswordChange] = useState('');
   const [isValid, onLogin] = useState('');
 
-  const handleLogin = () => {
-    axios.post('http://127.0.0.1:3002/api/login',
-    {username: username, password: password})
-    .then(result => result.data)
-    .then(result => {
+  const handleLogin = async () => {
+    try {
+    const response = await axios.post('http://127.0.0.1:3002/api/login', {username: username, password: password});
+    const result = response.data;
+
       if (result === false) {
-      console.log('Incorrect Username or Password')
+        throw result;
+      } else {
+        console.log('Success')
+        onLogin('true');
+        props.setUser(result.username);
+        props.setUserId(result._id);
+        props.fetchAllData(result._id);
+        props.toggle();
+      }
+    } catch(err) {
+      console.log('Incorrect Username or Password', err)
       onLogin('false');
-    } else {
-      console.log('Success')
-      onLogin('true');
-      props.toggle();
-    }})
-    .catch(err => console.log(err))
+    }
   }
 
     return (
 
       <View style={styles.loginContainer}>
-
-      <TextInput
-        style={styles.TextInput}
-        placeholder="Username"
-        maxLength={16}
-        autoCapitalize="none"
-        onChangeText={text => onUsernameChange(text)}
-        value={username}
-        accessibilityLabel="Username Input"
+      <Input
+         maxlength={16}
+         value={username}
+         autoCaps={"none"}
+         placeholder="Username"
+         accessibility={"Username Input"}
+         change={onUsernameChange}
       />
-      <TextInput
-        style={styles.TextInput}
-        placeholder="Password"
-        secureTextEntry
-        maxLength={16}
-        autoCapitalize="none"
-        onChangeText={text => onPasswordChange(text)}
-        value={password}
-        accessibilityLabel="Password Input"
+       <Input
+         maxlength={16}
+         security={true}
+         value={password}
+         autoCaps={"none"}
+         placeholder="Password"
+         accessibility={"Password Input"}
+         change={onPasswordChange}
       />
       <Text style={styles.errorText}>
         {isValid === 'false' ? 'Incorrect Username or Password' : '' }
       </Text>
-      <TouchableOpacity
-        style={styles.loginButton}
-        onPress={()=> handleLogin()}
+      <Button
         title="Login"
-        accessibilityLabel="Login button"
-      >
-        <Text>Login</Text>
-      </TouchableOpacity>
+        onClick={handleLogin}
+        accessibility={"Login button"}
+      />
       <View>
         <Text>Don't have an account?</Text>
         <TouchableOpacity>

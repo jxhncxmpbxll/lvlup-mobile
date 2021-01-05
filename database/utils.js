@@ -3,14 +3,18 @@ const mongoose = require('mongoose');
 const User = require('./user.js');
 const Task = require('./task.js');
 
-const getTasks = (username) => {
-  User.findOne({username: username})
-  .populate('tasks').exec((err, tasks) => {
-    if(err) {
-      console.log(err);
-    } else {
-    console.log('Found ' + tasks + ' from User: ' + username);
-    }
+const getTasks = (userId) => {
+  return new Promise((res, rej) => {
+    User.findOne({ _id: userId })
+      .populate('tasks').exec((err, tasks) => {
+        if (err) {
+          console.log(err);
+          rej(err)
+        } else {
+          console.log('Found ' + tasks + ' from User: ' + userId);
+          res(tasks)
+        }
+      })
   })
 }
 
@@ -22,25 +26,45 @@ const findUser = (username, password) => {
   return User.findOne({username: username}).where({password: password});
 }
 
-const addTask = (username, task) => {
-  return User.findOne({username: username}).save({tasks: task});
+const updateUser = (vals) => {
+  const { _id, level, experience, strength, intellect, charisma, healing, applyOnLvlUp } = vals;
+  const options = { new: true};
+  return User.findByIdAndUpdate(
+    {_id: _id}, {$set: {
+      level: level,
+      experience: experience,
+      strength: strength,
+      intellect: intellect,
+      charisma: charisma,
+      healing: healing,
+      applyOnLvlUp: applyOnLvlUp }
+    }, options);
 }
 
-const editTask = (username, task) => {
-  return User.findOne({username: username}).save({tasks: task});
+const addTask = (task) => {
+  return Task.create(task);
 }
 
-const completeTask = (username, task) => {
-  return
+const editTask = (taskId) => {
+  return User.findOne({_id: taskId}).save(task);
+}
+
+const completeTask = (updatedTask) => {
+  const { _id, status, dateCompleted, xpValue } = updatedTask;
+  const options = { new: true};
+  return Task.findByIdAndUpdate(
+    {_id: _id}, {$set: { status: status, dateCompleted: dateCompleted, xpValue: xpValue }}, options
+  );
 }
 
 const deleteTask = (id) => {
-  return
+  return Task.findOneAndDelete({_id: id})
 }
 
 module.exports.getTasks = getTasks;
 module.exports.addUser = addUser;
 module.exports.findUser = findUser;
+module.exports.updateUser = updateUser;
 module.exports.addTask = addTask;
 module.exports.editTask = editTask;
 module.exports.completeTask = completeTask;

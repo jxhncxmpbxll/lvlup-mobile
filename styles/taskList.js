@@ -2,17 +2,23 @@ import {StyleSheet} from 'react-native';
 
 const taskListStyles = StyleSheet.create({
   taskListContainer: {
-    height: '40%',
+    maxHeight: 275,
+    height: '100%',
     width: '75%',
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
   scrollView: {
-    flex: 1,
-    flexDirection: 'column',
     height: '100%',
-    width: '100%'
+    maxHeight: 275,
+    width: '100%',
+  },
+  scrollContent: {
+      height: 'auto',
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingBottom: 25
   },
   taskListHeaderContainer: {
     flexDirection: 'row',
@@ -25,8 +31,6 @@ const taskListStyles = StyleSheet.create({
     marginBottom: 10,
   },
   tasks: {
-    flex: 1,
-    backgroundColor: 'pink',
     height: '100%',
     width: '100%',
   },
