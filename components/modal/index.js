@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { View, Text, Button, Dimensions, TouchableOpacity, Image } from 'react-native';
 
 const Modal = (props) => {
@@ -15,15 +15,16 @@ const Modal = (props) => {
       right: 0,
       bottom: 0,
       backgroundColor: 'rgba(0, 0, 0, 0.3)',
-      display: show ? 'flex' : 'none'
-    }}>
+      display: show ? 'flex' : 'none',
+    }}
+    >
       <View style={{
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 0.5,
         borderColor: 'lightgray',
-        shadowColor: "#000",
+        shadowColor: '#000',
         shadowOffset: {
           width: 0,
           height: 2,
@@ -33,27 +34,36 @@ const Modal = (props) => {
         elevation: 4,
         backgroundColor: props.background || 'white',
         height: innerHeight,
-        width: innerWidth
-      }}>
-         {
-            (props.toggle) ? <TouchableOpacity onPress={()=> props.toggle(false)} style={{
-            position: 'absolute',
-            padding: 8,
-            top: 7,
-            right: 7,
-            zIndex: 1000
-          }}>
-            <Image style={{
-              position: 'relative',
-              maxHeight: 10,
-              maxWidth: 10
-            }} source={require('../../src/assets/icons/close_icon.png')} />
-          </TouchableOpacity> : null
+        width: innerWidth,
+      }}
+      >
+        {
+            (props.toggle) ? (
+              <TouchableOpacity
+                onPress={() => props.toggle(false)}
+                style={{
+                  position: 'absolute',
+                  padding: 8,
+                  top: 7,
+                  right: 7,
+                  zIndex: 1000,
+                }}
+              >
+                <Image
+                  style={{
+                    position: 'relative',
+                    maxHeight: 10,
+                    maxWidth: 10,
+                  }}
+                  source={require('../../src/assets/icons/close_icon.png')}
+                />
+              </TouchableOpacity>
+            ) : null
          }
         {props.children}
       </View>
     </View>
   );
-}
+};
 
 export default Modal;

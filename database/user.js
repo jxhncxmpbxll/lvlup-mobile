@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+
+const { Schema } = mongoose;
 
 const UserSchema = new Schema({
   username: String,
@@ -14,18 +15,18 @@ const UserSchema = new Schema({
     str: Number,
     int: Number,
     chr: Number,
-    heal: Number
+    heal: Number,
   },
 }, {
   toJSON: { virtuals: true },
-  toObject: { virtuals: true }
-})
+  toObject: { virtuals: true },
+});
 
 UserSchema.virtual('tasks', {
   ref: 'Task',
   foreignField: 'user',
-  localField: '_id'
-})
+  localField: '_id',
+});
 
 const User = mongoose.model('User', UserSchema);
 

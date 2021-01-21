@@ -1,19 +1,14 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   SafeAreaView,
-  StyleSheet,
-  ScrollView,
   View,
-  Text,
-  Button,
-  TouchableOpacity,
   StatusBar,
 } from 'react-native';
+import axios from 'axios';
 import Modal from './components/modal';
 
-
 import Login from './components/login';
-import CreateAccount from './components/createAccount';
+// import CreateAccount from './components/createAccount';
 import Avatar from './components/avatar';
 import ExperienceBar from './components/experienceBar';
 import AttributesRow from './components/attributesRow';
@@ -21,10 +16,7 @@ import TaskList from './components/taskList';
 
 import styles from './styles/app';
 
-import axios from 'axios';
-
 const App = () => {
-
   const [user, setUser] = useState('');
   const [userId, setUserId] = useState('');
   const [lvl, setLvl] = useState(0);
@@ -37,69 +29,70 @@ const App = () => {
     str: 0,
     int: 0,
     chr: 0,
-    heal: 0
+    heal: 0,
   });
   const [tasks, setTasks] = useState([]);
 
   const [loginModal, toggleLoginModal] = useState(true);
 
-  useEffect(()=> {
-  }, [user, setUser, userId, setUserId, lvl, setLvl, xp, setXP, str, setStr, int, setInt, chr, setChr, heal, applyOnLvlUp, setApplyOnLvlUp, tasks]);
+  useEffect(() => {
+  }, [user, userId, lvl, xp, str, int, chr, heal, applyOnLvlUp, tasks]);
 
   const fetchAllData = (id) => {
     axios.post('http://127.0.0.1:3002/api/tasks', { _id: id })
-    .then(result => result.data)
-    .then((result)=> {
-      setUser(result.username);
-      setUserId(result._id);
-      setLvl(result.level);
-      setXP(result.experience);
-      setStr(result.strength);
-      setInt(result.intellect);
-      setChr(result.charisma);
-      setHeal(result.healing);
-      setApplyOnLvlUp(result.applyOnLvlUp);
-      setTasks(result.tasks);
-    })
-    .catch(err => console.log(err));
-  }
+      .then((result) => result.data)
+      .then((result) => {
+        setUser(result.username);
+        setUserId(result._id);
+        setLvl(result.level);
+        setXP(result.experience);
+        setStr(result.strength);
+        setInt(result.intellect);
+        setChr(result.charisma);
+        setHeal(result.healing);
+        setApplyOnLvlUp(result.applyOnLvlUp);
+        setTasks(result.tasks);
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <View>
-      <StatusBar/>
+      <StatusBar />
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.container}>
-         <Avatar user={user}/>
-         <ExperienceBar lvl={lvl} xp={xp}/>
-         <AttributesRow str={str} int={int} chr={chr} heal={heal}/>
-         <TaskList
-         user={user}
-         userId={userId}
-         tasks={tasks || []}
-         lvl={lvl}
-         xp={xp}
-         str={str}
-         int={int}
-         chr={chr}
-         heal={heal}
-         setLvl={setLvl}
-         setTasks={setTasks}
-         applyOnLvlUp={applyOnLvlUp}
-         setApplyOnLvlUp={setApplyOnLvlUp}
-         setXP={setXP}
-         setStr={setStr}
-         setInt={setInt}
-         setChr={setChr}
-         setHeal={setHeal}
-         />
+          <Avatar user={user} />
+          <ExperienceBar lvl={lvl} xp={xp} />
+          <AttributesRow str={str} int={int} chr={chr} heal={heal} />
+          <TaskList
+            user={user}
+            userId={userId}
+            tasks={tasks || []}
+            lvl={lvl}
+            xp={xp}
+            str={str}
+            int={int}
+            chr={chr}
+            heal={heal}
+            setLvl={setLvl}
+            setTasks={setTasks}
+            applyOnLvlUp={applyOnLvlUp}
+            setApplyOnLvlUp={setApplyOnLvlUp}
+            setXP={setXP}
+            setStr={setStr}
+            setInt={setInt}
+            setChr={setChr}
+            setHeal={setHeal}
+          />
           <Modal show={loginModal}>
             <Login
-            setUser={setUser}
-            setUserId={setUserId}
-            fetchAllData={fetchAllData}
-            toggle={toggleLoginModal}/>
+              setUser={setUser}
+              setUserId={setUserId}
+              fetchAllData={fetchAllData}
+              toggle={toggleLoginModal}
+            />
           </Modal>
-       </View>
+        </View>
       </SafeAreaView>
     </View>
   );

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+
+const { Schema } = mongoose;
 
 const TaskSchema = new Schema({
   name: String,
@@ -8,11 +9,11 @@ const TaskSchema = new Schema({
   dateCreated: Date,
   dateCompleted: Date,
   xpValue: Number,
-  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User'}
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 }, {
   toJSON: { virtuals: true },
-  toObject: { virtuals: true }
-})
+  toObject: { virtuals: true },
+});
 
 const Task = mongoose.model('Task', TaskSchema);
 
