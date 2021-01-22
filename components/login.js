@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Modal } from 'react-native';
 import axios from 'axios';
+import { login } from '../services/userServices';
 import Input from './input';
 import Button from './button';
 
@@ -13,7 +14,7 @@ const Login = (props) => {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post('http://127.0.0.1:3002/api/login', { username, password });
+      const response = await login(username, password);
       const result = response.data;
 
       if (result === false) {

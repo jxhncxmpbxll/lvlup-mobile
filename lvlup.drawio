@@ -1,1 +1,76 @@
-<mxfile host="Electron" modified="2020-12-20T04:30:19.975Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/13.7.9 Chrome/85.0.4183.121 Electron/10.1.3 Safari/537.36" etag="5z7rxhtC8ThJoOFwglvb" version="13.7.9" type="device"><diagram id="BllTljz5AXgF-SKxUAsg" name="Page-1">5Vhdk5owFP01PrbDh6A+tmp3H+x0p2639THCLaQNXBqCYn99EwhghtFxZ1t0py/KPblJ7sc5BBi586S84ySLP2IIbORYYTlyFyPHsW3Ll38KOdTI1LFqIOI01E4dsKa/QYONW0FDyA1HgcgEzUwwwDSFQBgY4Rz3ptt3ZOauGYmgB6wDwvroVxqKWGfhWR1+DzSKRZuwHklI46yBPCYh7o8gdzly5xxR1FdJOQemitfUpZ734cRoGxiHVFwyYUsW9yT7hY93O++Tv3qy+WbyxtOxiUOTMIQyf20iFzFGmBK27ND3HIs0BLWqJa3OZ4WYSdCW4A8Q4qCbSQqBEopFwvSoDJgfvqn5b73G3OjlKmNRGtZBW3WsKsCTJdBQjgUP4EzeY00lwiMQZ/z8tlGS4YAJyHjkPA6MCLoz4yCaalHr1059QCojdKxGFq7mhBaFM7HMJeq49Kyup/LiKIwOqjr9jK7r7HeEFTqF1dPqy4OEPiMJE5L1WGH2fB9TAeuMVCXeS+Gb/dWrAxdQnu9Uv7J6wsQskO1re99p0G6EFR/pz7NO98Ko4nNL1tyPBlZKScWRUKS1ORrpZKKMRiU3oC7/QnXNXqiuF3XU74ngkeQ/JcJorrS6VaEERECEercbEoQzvrYgpv/pyTG7kNu2O8jRMbaGPTpmfdXQBNT+jKFIZDnz6jGLq3qTIK5KpWR1W/pxnWvrx3auIaC/KIShCD4dluB1WgbDl2UGnEIaVDxPQ/UrBKfbQigkU6Eo1mOqTg/YVa9Axc09RLW3iutxfvzaOe8NwnnPH5jzXo/z73ZEbipXW2dc8jS/OTJPr05m/7WTeTIImf3xwGSe9Mmc0kSmhOnN0dj7hy+20uy+LtXV7b7Rucs/</diagram></mxfile>
+<mxfile host="65bd71144e" modified="2021-01-22T02:52:38.265Z" agent="5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.52.1 Chrome/83.0.4103.122 Electron/9.3.5 Safari/537.36" etag="nOQRJ_lRlOt8xoTkXDt3" version="13.10.0" type="embed" pages="2">
+    <diagram id="BllTljz5AXgF-SKxUAsg" name="Page-1">
+        <mxGraphModel dx="244" dy="279" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="baDHapqoTGv5O6LV1rY7-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="baDHapqoTGv5O6LV1rY7-4" target="baDHapqoTGv5O6LV1rY7-6" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="130" y="270" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="baDHapqoTGv5O6LV1rY7-4" value="LVLUP Roadmap" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="70" y="160" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="baDHapqoTGv5O6LV1rY7-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="baDHapqoTGv5O6LV1rY7-6" target="baDHapqoTGv5O6LV1rY7-9" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="baDHapqoTGv5O6LV1rY7-6" value="Task list by category" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="70" y="240" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="baDHapqoTGv5O6LV1rY7-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="baDHapqoTGv5O6LV1rY7-9" target="baDHapqoTGv5O6LV1rY7-13" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="130" y="400" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="baDHapqoTGv5O6LV1rY7-9" value="Time allotments for each task" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="70" y="320" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="baDHapqoTGv5O6LV1rY7-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="baDHapqoTGv5O6LV1rY7-13" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="130" y="480" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="baDHapqoTGv5O6LV1rY7-13" value="Experience and attribute points on level up" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="70" y="400" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="baDHapqoTGv5O6LV1rY7-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="baDHapqoTGv5O6LV1rY7-15" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="130" y="560" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="baDHapqoTGv5O6LV1rY7-15" value="Avatar/Sprites" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="70" y="480" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="baDHapqoTGv5O6LV1rY7-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="baDHapqoTGv5O6LV1rY7-17" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="130" y="640" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="baDHapqoTGv5O6LV1rY7-17" value="Animations" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="70" y="560" width="120" height="50" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="AxSqhmQ6h2YunoNDzXn8" name="Page-2">
+        <mxGraphModel dx="244" dy="279" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="m76tWBByrxGn1XwzRW_t-0"/>
+                <mxCell id="m76tWBByrxGn1XwzRW_t-1" parent="m76tWBByrxGn1XwzRW_t-0"/>
+                <mxCell id="m76tWBByrxGn1XwzRW_t-2" value="Flow of Data" style="whiteSpace=wrap;html=1;" vertex="1" parent="m76tWBByrxGn1XwzRW_t-1">
+                    <mxGeometry x="10" y="50" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="m76tWBByrxGn1XwzRW_t-3" value="App&lt;br&gt;(All user data)&lt;br&gt;(Tasks)&lt;br&gt;(toBeCompleted)&lt;br&gt;(completeTask)&lt;br&gt;(lvlup)&lt;br&gt;(saveToCharacter)" style="whiteSpace=wrap;html=1;" vertex="1" parent="m76tWBByrxGn1XwzRW_t-1">
+                    <mxGeometry x="10" y="150" width="120" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="m76tWBByrxGn1XwzRW_t-4" value="Task List&lt;br&gt;(Tasks)&lt;br&gt;(toBeCompleted)&lt;br&gt;(selectedTask)&lt;br&gt;(selectedTaskCategory)" style="whiteSpace=wrap;html=1;" vertex="1" parent="m76tWBByrxGn1XwzRW_t-1">
+                    <mxGeometry x="30" y="300" width="160" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="m76tWBByrxGn1XwzRW_t-5" value="Task&lt;br&gt;(selectedTask)&lt;br&gt;(selectedTaskCategory)&lt;br&gt;(toBeCompleted)&lt;br&gt;(completeTask)&lt;br&gt;(lvlup)&lt;br&gt;(saveToCharacter)" style="whiteSpace=wrap;html=1;" vertex="1" parent="m76tWBByrxGn1XwzRW_t-1">
+                    <mxGeometry x="120" y="450" width="160" height="120" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

@@ -36,8 +36,6 @@ const TaskList = (props) => {
             name={task.name}
             id={task._id}
             category={task.category}
-            tasks={props.tasks}
-            setTasks={props.setTasks}
             setSelectedTask={setSelectedTask}
             setSelectedTaskCategory={setSelectedTaskCategory}
             toggle={toggleCompleteTaskModal}
@@ -57,25 +55,10 @@ const TaskList = (props) => {
       </Modal>
       <Modal show={completeTaskModal} toggle={toggleCompleteTaskModal}>
         <CompleteTask
-          userId={props.userId}
-          tasks={props.tasks}
-          xp={props.xp}
-          lvl={props.lvl}
-          applyOnLvlUp={props.applyOnLvlUp}
-          str={props.str}
-          int={props.int}
-          chr={props.chr}
-          heal={props.heal}
-          setTasks={props.setTasks}
-          setXP={props.setXP}
-          setLvl={props.setLvl}
-          setApplyOnLvlUp={props.setApplyOnLvlUp}
-          setStr={props.setStr}
-          setInt={props.setInt}
-          setChr={props.setChr}
-          setHeal={props.setHeal}
           selectedTask={selectedTask}
           selectedTaskCategory={selectedTaskCategory}
+          setCompletedTask={props.setCompletedTask}
+          setTaskCompletion={props.setTaskCompletion}
           toggle={toggleCompleteTaskModal}
         />
       </Modal>

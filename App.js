@@ -5,6 +5,10 @@ import {
   StatusBar,
 } from 'react-native';
 import axios from 'axios';
+
+import { saveToCharacter } from './services/userServices';
+import { getTasks, completeTask } from './services/taskServices';
+
 import Modal from './components/modal';
 
 import Login from './components/login';
@@ -32,14 +36,29 @@ const App = () => {
     heal: 0,
   });
   const [tasks, setTasks] = useState([]);
-
+  const [completedTask, setCompletedTask] = useState({
+    _id: '',
+    xpValue: 0,
+    category: '',
+    timeSpent: 0
+  });
+  const [taskCompletion, setTaskCompletion] = useState(false);
   const [loginModal, toggleLoginModal] = useState(true);
 
   useEffect(() => {
-  }, [user, userId, lvl, xp, str, int, chr, heal, applyOnLvlUp, tasks]);
+    if (xp >= 1) {
+      lvlUp(xp, lvl);
+    }}, [xp]);
+
+  useEffect(() => {
+    if (taskCompletion) {
+      handleTaskCompletion(completedTask);
+      saveToCharacter(userId, lvl, xp, str, int, chr, heal, applyOnLvlUp);
+      setTaskCompletion(false);
+    }}, [taskCompletion, completedTask]);
 
   const fetchAllData = (id) => {
-    axios.post('http://127.0.0.1:3002/api/tasks', { _id: id })
+    getTasks(id)
       .then((result) => result.data)
       .then((result) => {
         setUser(result.username);
@@ -56,6 +75,38 @@ const App = () => {
       .catch((err) => console.log(err));
   };
 
+  const lvlUp = (xp, lvl) => {
+    setLvl(lvl + 1);
+    setXP(xp - 1);
+    setStr(applyOnLvlUp.str);
+    setInt(applyOnLvlUp.int);
+    setChr(applyOnLvlUp.chr);
+    setHeal(applyOnLvlUp.heal);
+    console.log('saveToCharacter xp: ', xp, str, int, chr, heal);
+    setApplyOnLvlUp({ str: 0, int: 0, chr: 0, heal: 0 });
+  };
+
+  const handleTaskCompletion = (task) => {
+    const { _id, xpValue, category } = task;
+    completeTask(_id, xpValue)
+    .then((result) => result.data)
+    .then((result) => {
+      const playerXP = xp + result.xpValue;
+      console.log('Quest Completed Successfully!', result);
+      setTasks([...removeCompleted(_id), result]);
+      setXP(playerXP);
+      updateApplyOnLvlUp(category)
+    })
+    .catch((err) => console.log(err));
+  };
+
+  const updateApplyOnLvlUp = (attr) => {
+    setApplyOnLvlUp({ ...applyOnLvlUp, [attr]: Math.ceil(completedTask.timeSpent / 2) });
+  };
+
+  const removeCompleted = (taskId) =>
+    tasks.filter((task) => task._id !== taskId && task.status === 'In Progress');
+
   return (
     <View>
       <StatusBar />
@@ -65,24 +116,10 @@ const App = () => {
           <ExperienceBar lvl={lvl} xp={xp} />
           <AttributesRow str={str} int={int} chr={chr} heal={heal} />
           <TaskList
-            user={user}
-            userId={userId}
             tasks={tasks || []}
-            lvl={lvl}
-            xp={xp}
-            str={str}
-            int={int}
-            chr={chr}
-            heal={heal}
-            setLvl={setLvl}
             setTasks={setTasks}
-            applyOnLvlUp={applyOnLvlUp}
-            setApplyOnLvlUp={setApplyOnLvlUp}
-            setXP={setXP}
-            setStr={setStr}
-            setInt={setInt}
-            setChr={setChr}
-            setHeal={setHeal}
+            setCompletedTask={setCompletedTask}
+            setTaskCompletion={setTaskCompletion}
           />
           <Modal show={loginModal}>
             <Login

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Image, TouchableOpacity } from 'react-native';
 
 import axios from 'axios';
+import { addTask } from '../services/taskServices';
+
 import styles from '../styles/addTask.js';
 
 const AddTask = (props) => {
@@ -9,15 +11,7 @@ const AddTask = (props) => {
   const [category, onCategoryChange] = useState('');
 
   const handleAddTask = () => {
-    axios.post('http://127.0.0.1:3002/api/tasks/add',
-      {
-        name: questName,
-        category,
-        status: 'In Progress',
-        dateCreated: new Date(),
-        dateCompleted: '',
-        user: props.userId,
-      })
+    addTask(questName, category, props.userId)
       .then((result) => result.data)
       .then((result) => {
         console.log('Quest Added Successfully!', result);
