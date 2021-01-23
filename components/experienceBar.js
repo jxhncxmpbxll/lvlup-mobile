@@ -4,8 +4,9 @@ import ProgressBar from 'react-native-progress/Bar';
 
 import styles from '../styles/experienceBar';
 
-const ExperienceBar = (props) => (
-  <View style={styles.XPContainer}>
+const ExperienceBar = (props) => {
+  return (
+    <View style={styles.XPContainer}>
     <View style={styles.lvl}>
       <Text style={styles.lvlHeader}>LVL</Text>
       <Text style={styles.lvlNum}>{props.lvl}</Text>
@@ -20,6 +21,7 @@ const ExperienceBar = (props) => (
       <Text style={styles.XPHeader}>XP</Text>
     </View>
   </View>
-);
+  )
+  };
 
 export default ExperienceBar;

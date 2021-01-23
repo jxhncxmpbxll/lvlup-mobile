@@ -7,7 +7,7 @@ import styles from '../styles/completeTask.js';
 
 const CompleteTask = (props) => {
 
-  const [timeSpent, setTimeSpent] = useState(null);
+  const [timeSpent, setTimeSpent] = useState('');
 
   const handleCompleteTask = () => {
     props.setCompletedTask({
@@ -17,7 +17,7 @@ const CompleteTask = (props) => {
         timeSpent: timeSpent
     });
     props.setTaskCompletion(true);
-    setTimeSpent(null);
+    setTimeSpent('');
     props.toggle(false);
   }
 

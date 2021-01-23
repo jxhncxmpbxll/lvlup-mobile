@@ -8,8 +8,8 @@ import Button from './button';
 import styles from '../styles/login.js';
 
 const Login = (props) => {
-  const [username, onUsernameChange] = useState('');
-  const [password, onPasswordChange] = useState('');
+  const [username, onUsernameChange] = useState('Crono');
+  const [password, onPasswordChange] = useState('password');
   const [isValid, onLogin] = useState('');
 
   const handleLogin = async () => {

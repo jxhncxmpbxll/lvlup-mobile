@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, Component } from 'react';
 import {
   SafeAreaView,
   View,
@@ -20,119 +20,117 @@ import TaskList from './components/taskList';
 
 import styles from './styles/app';
 
-const App = () => {
-  const [user, setUser] = useState('');
-  const [userId, setUserId] = useState('');
-  const [lvl, setLvl] = useState(0);
-  const [xp, setXP] = useState(0);
-  const [str, setStr] = useState(0);
-  const [int, setInt] = useState(0);
-  const [chr, setChr] = useState(0);
-  const [heal, setHeal] = useState(0);
-  const [applyOnLvlUp, setApplyOnLvlUp] = useState({
-    str: 0,
-    int: 0,
-    chr: 0,
-    heal: 0,
-  });
-  const [tasks, setTasks] = useState([]);
-  const [completedTask, setCompletedTask] = useState({
-    _id: '',
-    xpValue: 0,
-    category: '',
-    timeSpent: 0
-  });
-  const [taskCompletion, setTaskCompletion] = useState(false);
-  const [loginModal, toggleLoginModal] = useState(true);
+class App extends Component {
+  constructor(props) {
+    super(props);
 
-  useEffect(() => {
-    if (xp >= 1) {
-      lvlUp(xp, lvl);
-    }}, [xp]);
+    this.state = {
+      user: '',
+      userId: '',
+      lvl: 0,
+      xp: 0,
+      str: 0,
+      int: 0,
+      chr: 0,
+      heal: 0,
+      applyOnLvlUp: { str: 0, int: 0, chr: 0, heal: 0 },
+      tasks: [],
+      completedTask:{ _id: '', xpValue: 0, category: '', timeSpent: 0 },
+      taskCompletion: false,
+      loginModal: true
+    };
+  }
 
-  useEffect(() => {
-    if (taskCompletion) {
-      handleTaskCompletion(completedTask);
+  componentDidUpdate() {
+    if (this.state.taskCompletion) {
+      const { userId, lvl, xp, chr, str, int, heal, applyOnLvlUp, completedTask } = this.state;
+      console.log('this statae, ', completedTask)
+      this.handleTaskCompletion(completedTask);
+      console.log('values passed into saveToCharacter at Task Completion: ', userId, lvl, xp, str, int, chr, heal, applyOnLvlUp);
       saveToCharacter(userId, lvl, xp, str, int, chr, heal, applyOnLvlUp);
-      setTaskCompletion(false);
-    }}, [taskCompletion, completedTask]);
+      this.setState({ taskCompletion: false });
+    }
+  }
 
-  const fetchAllData = (id) => {
+  fetchAllData(id) {
     getTasks(id)
-      .then((result) => result.data)
-      .then((result) => {
-        setUser(result.username);
-        setUserId(result._id);
-        setLvl(result.level);
-        setXP(result.experience);
-        setStr(result.strength);
-        setInt(result.intellect);
-        setChr(result.charisma);
-        setHeal(result.healing);
-        setApplyOnLvlUp(result.applyOnLvlUp);
-        setTasks(result.tasks);
+      .then(result => result.data)
+      .then(result => {
+        const { username, _id, level, experience, strength, intellect, charisma, healing, applyOnLvlUp, tasks} = result;
+        const exp = Number(parseFloat(experience).toFixed(2));
+        this.setState({ user: username, userId: _id, lvl: level, xp: exp, str: strength, int: intellect, chr: charisma, heal: healing, applyOnLvlUp, tasks });
       })
       .catch((err) => console.log(err));
   };
 
-  const lvlUp = (xp, lvl) => {
-    setLvl(lvl + 1);
-    setXP(xp - 1);
-    setStr(applyOnLvlUp.str);
-    setInt(applyOnLvlUp.int);
-    setChr(applyOnLvlUp.chr);
-    setHeal(applyOnLvlUp.heal);
-    console.log('saveToCharacter xp: ', xp, str, int, chr, heal);
-    setApplyOnLvlUp({ str: 0, int: 0, chr: 0, heal: 0 });
-  };
+  lvlUp(xp, lvl) {
+    const plvl = lvl + 1;
+    const pxp = Number(parseFloat(xp - 1).toFixed(2));
+    const { str, int, chr, heal } = this.state.applyOnLvlUp;
+    this.setState({ xp: pxp, lvl: plvl, str, int, chr, heal }, () => this.setState({ applyOnLvlUp: {str: 0, int: 0, chr: 0, heal: 0} }));
+  }
 
-  const handleTaskCompletion = (task) => {
+  handleTaskCompletion(task) {
     const { _id, xpValue, category } = task;
     completeTask(_id, xpValue)
-    .then((result) => result.data)
-    .then((result) => {
-      const playerXP = xp + result.xpValue;
+    .then(result => result.data)
+    .then(result => {
+      const playerXP = this.state.xp + result.xpValue;
       console.log('Quest Completed Successfully!', result);
-      setTasks([...removeCompleted(_id), result]);
-      setXP(playerXP);
-      updateApplyOnLvlUp(category)
+      this.setState({ tasks: this.removeCompleted(_id), xp: playerXP }, () => this.updateApplyOnLvlUp(category));
     })
     .catch((err) => console.log(err));
-  };
+  }
 
-  const updateApplyOnLvlUp = (attr) => {
-    setApplyOnLvlUp({ ...applyOnLvlUp, [attr]: Math.ceil(completedTask.timeSpent / 2) });
-  };
+  updateApplyOnLvlUp(attr) {
+    this.setState({ applyOnLvlUp: { ...this.state.applyOnLvlUp, [attr]: Math.ceil(this.state.completedTask.timeSpent / 2) } }, () => {
+      if (this.state.xp >= 1) {
+        this.lvlUp(this.state.xp, this.state.lvl);
+      }
+    });
+  }
+  removeCompleted(taskId) {
+    return this.state.tasks.filter((task) => task._id !== taskId && task.status === 'In Progress');
+  }
+  setCompletedTask(task) {
+    this.setState({ completedTask: task});
+  }
+  setTaskCompletion(completion) {
+    this.setState({ taskCompletion: completion });
+  }
 
-  const removeCompleted = (taskId) =>
-    tasks.filter((task) => task._id !== taskId && task.status === 'In Progress');
+  render() {
 
-  return (
-    <View>
+    return (
+      <View>
       <StatusBar />
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.container}>
-          <Avatar user={user} />
-          <ExperienceBar lvl={lvl} xp={xp} />
-          <AttributesRow str={str} int={int} chr={chr} heal={heal} />
+          <Avatar user={this.state.user} />
+          <ExperienceBar lvl={this.state.lvl} xp={this.state.xp} />
+          <AttributesRow str={this.state.str} int={this.state.int} chr={this.state.chr} heal={this.state.heal} />
           <TaskList
-            tasks={tasks || []}
-            setTasks={setTasks}
-            setCompletedTask={setCompletedTask}
-            setTaskCompletion={setTaskCompletion}
+            tasks={this.state.tasks || []}
+            setTasks={(tasks) => this.setState({ tasks })}
+            setCompletedTask={this.setCompletedTask.bind(this)}
+            setTaskCompletion={this.setTaskCompletion.bind(this)}
           />
-          <Modal show={loginModal}>
+          <Modal show={this.state.loginModal}>
             <Login
-              setUser={setUser}
-              setUserId={setUserId}
-              fetchAllData={fetchAllData}
-              toggle={toggleLoginModal}
+              setUser={(name) => this.setState({ user: name })}
+              setUserId={(id) => {
+                this.setState({ userId: id });
+                console.log('this is the id, ', id)
+              }}
+              fetchAllData={this.fetchAllData.bind(this)}
+              toggle={(show) => this.setState({ loginModal: show })}
             />
           </Modal>
         </View>
       </SafeAreaView>
     </View>
-  );
-};
+    );
+  }
+}
 
 export default App;
