@@ -44,9 +44,7 @@ class App extends Component {
   componentDidUpdate() {
     if (this.state.taskCompletion) {
       const { userId, lvl, xp, chr, str, int, heal, applyOnLvlUp, completedTask } = this.state;
-      console.log('this statae, ', completedTask)
       this.handleTaskCompletion(completedTask);
-      console.log('values passed into saveToCharacter at Task Completion: ', userId, lvl, xp, str, int, chr, heal, applyOnLvlUp);
       saveToCharacter(userId, lvl, xp, str, int, chr, heal, applyOnLvlUp);
       this.setState({ taskCompletion: false });
     }
@@ -67,7 +65,21 @@ class App extends Component {
     const plvl = lvl + 1;
     const pxp = Number(parseFloat(xp - 1).toFixed(2));
     const { str, int, chr, heal } = this.state.applyOnLvlUp;
-    this.setState({ xp: pxp, lvl: plvl, str, int, chr, heal }, () => this.setState({ applyOnLvlUp: {str: 0, int: 0, chr: 0, heal: 0} }));
+    this.setState((state)=> {
+      return {
+        xp: pxp,
+        lvl: state.lvl + 1,
+        str: state.str + str,
+        int: state.int + int,
+        chr: state.chr + chr,
+        heal: state.heal + heal
+      }
+    });
+    this.setState({ applyOnLvlUp: {str: 0, int: 0, chr: 0, heal: 0}});
+  }
+
+  componentWillUnmount() {
+    saveToCharacter(this.state.userId, this.state.lvl, this.state.xp, this.state.str, this.state.int, this.state.chr, this.state.heal, this.state.applyOnLvlUp);
   }
 
   handleTaskCompletion(task) {
@@ -100,7 +112,6 @@ class App extends Component {
   }
 
   render() {
-
     return (
       <View>
       <StatusBar />
@@ -120,7 +131,6 @@ class App extends Component {
               setUser={(name) => this.setState({ user: name })}
               setUserId={(id) => {
                 this.setState({ userId: id });
-                console.log('this is the id, ', id)
               }}
               fetchAllData={this.fetchAllData.bind(this)}
               toggle={(show) => this.setState({ loginModal: show })}
