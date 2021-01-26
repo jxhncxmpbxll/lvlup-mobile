@@ -79,6 +79,7 @@ class App extends Component {
   }
 
   componentWillUnmount() {
+    console.log('unmounted!');
     saveToCharacter(this.state.userId, this.state.lvl, this.state.xp, this.state.str, this.state.int, this.state.chr, this.state.heal, this.state.applyOnLvlUp);
   }
 
