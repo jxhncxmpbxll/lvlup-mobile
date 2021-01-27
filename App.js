@@ -72,13 +72,14 @@ class App extends Component {
         str: state.str + str,
         int: state.int + int,
         chr: state.chr + chr,
-        heal: state.heal + heal
-      }
-    });
-    this.setState({ applyOnLvlUp: {str: 0, int: 0, chr: 0, heal: 0}});
+        heal: state.heal + heal,
+        applyOnLvlUp: {str: 0, int: 0, chr: 0, heal: 0}
+      };
+    }, ()=> saveToCharacter(this.state.userId, this.state.lvl, this.state.xp, this.state.str, this.state.int, this.state.chr, this.state.heal, this.state.applyOnLvlUp));
   }
 
   componentWillUnmount() {
+    console.log('unmounted!');
     saveToCharacter(this.state.userId, this.state.lvl, this.state.xp, this.state.str, this.state.int, this.state.chr, this.state.heal, this.state.applyOnLvlUp);
   }
 
